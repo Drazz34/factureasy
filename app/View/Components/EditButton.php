@@ -6,11 +6,11 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ShowButton extends Component
+class EditButton extends Component
 {
-    
-    public $client_id;
 
+    public $client_id;
+    
     /**
      * Create a new component instance.
      */
@@ -24,6 +24,6 @@ class ShowButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.show-button');
+        return view('components.edit-button');
     }
 }

@@ -6,9 +6,9 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ShowButton extends Component
+class DeleteButton extends Component
 {
-    
+
     public $client_id;
 
     /**
@@ -24,6 +24,6 @@ class ShowButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.show-button');
+        return view('components.delete-button');
     }
 }

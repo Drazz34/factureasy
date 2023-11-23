@@ -50,7 +50,11 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // $client = Client::find($id);
+        // return view('clients.edit',  [
+        //     'id_client' => $id,
+        //     'client' => $client
+        // ]);
     }
 
     /**
