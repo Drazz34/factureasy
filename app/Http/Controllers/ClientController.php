@@ -21,8 +21,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $message = "Ceci est un message d'alerte !";
-        return view('clients.create')->with('message', $message);
+        return view('clients.create');
     }
 
     /**

@@ -21,3 +21,7 @@
 .btn-green {
     @apply text-white bg-green-500 hover:bg-green-700
 }
+
+.btn-validate {
+    @apply text-white bg-orange-500 hover:bg-orange-700
+}

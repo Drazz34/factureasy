@@ -21,7 +21,7 @@
                                     </th>
                                     <th class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider flex justify-between items-center">
                                         Actions
-                                        <a href="" class="btn btn-green">Créer</a>
+                                        <a href="{{route('clients.create')}}" class="btn btn-green">Créer</a>
                                     </th>                                    
                                 </tr>
                             </thead>
