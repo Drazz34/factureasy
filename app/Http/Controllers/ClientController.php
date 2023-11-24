@@ -71,4 +71,14 @@ class ClientController extends Controller
     {
         //
     }
+
+    /**
+     * Recherche des clients par nom dans la page index
+     */
+    public function search(Request $request) {
+        $nom = $request->input('recherche_nom');
+        $clients = Client::where('nom', 'like', "%$nom%")->get();
+
+        return view('clients.index', compact('clients'));
+    }
 }
