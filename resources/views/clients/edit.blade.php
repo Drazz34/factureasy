@@ -45,15 +45,15 @@
                         <div>
                             <label for="facture_envoyee" class="block text-sm font-medium text-gray-700">Facture envoyée :</label>
                             <select name="facture_envoyee" id="facture_envoyee" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm rounded-md">
-                                <option value="oui" @if($client->facture_envoyee == 1)selected @endif>Oui</option>
-                                <option value="non" @if($client->facture_envoyee == 0)selected @endif>Non</option>
+                                <option value="oui" @if($client->facture_envoyee)selected @endif>Oui</option>
+                                <option value="non" @if(!$client->facture_envoyee)selected @endif>Non</option>
                             </select>
                         </div>
                         <div>
                             <label for="facture_payee" class="block text-sm font-medium text-gray-700">Facture payée :</label>
                             <select name="facture_payee" id="facture_payee" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm rounded-md">
-                                <option value="oui"  @if($client->facture_payee == 1)selected @endif>Oui</option>
-                                <option value="non"  @if($client->facture_payee == 0)selected @endif>Non</option>
+                                <option value="oui"  @if($client->facture_payee)selected @endif>Oui</option>
+                                <option value="non"  @if(!$client->facture_payee)selected @endif>Non</option>
                             </select>
                         </div>
 
