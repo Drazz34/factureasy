@@ -15,10 +15,16 @@
                         <div>
                             <label for="nom" class="block text-sm font-medium text-gray-700">Nom* :</label>
                             <input type="text" name="nom" id="nom" value="{{$client->nom}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('nom')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div>
                             <label for="prenom" class="block text-sm font-medium text-gray-700">Prénom* :</label>
                             <input type="text" name="prenom" id="prenom" value="{{$client->prenom}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('prenom')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror   
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Email* :</label>
@@ -33,16 +39,16 @@
                             <input type="tel" name="telephone" id="telephone" value="{{$client->telephone}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div>
-                            <label for="adresse_num_rue" class="block text-sm font-medium text-gray-700">Numéro et rue* :</label>
-                            <input type="text" name="adresse_num_rue" id="adresse_num_rue" value="{{$client->numero_et_rue}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <label for="numero_et_rue" class="block text-sm font-medium text-gray-700">Numéro et rue* :</label>
+                            <input type="text" name="numero_et_rue" id="numero_et_rue" value="{{$client->adresse->numero_et_rue}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div>
                             <label for="code_postal" class="block text-sm font-medium text-gray-700">Code postal* :</label>
-                            <input type="text" name="code_postal" id="code_postal" value="{{$client->code_postal}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" name="code_postal" id="code_postal" value="{{$client->adresse->code_postal}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div>
                             <label for="ville" class="block text-sm font-medium text-gray-700">Ville* :</label>
-                            <input type="text" name="ville" id="ville" value="{{$client->ville}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" name="ville" id="ville" value="{{$client->adresse->ville}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div>
                             <label for="facture_envoyee" class="block text-sm font-medium text-gray-700">Facture envoyée :</label>
@@ -54,8 +60,8 @@
                         <div>
                             <label for="facture_payee" class="block text-sm font-medium text-gray-700">Facture payée :</label>
                             <select name="facture_payee" id="facture_payee" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm rounded-md">
-                                <option value="oui"  @if($client->facture_payee)selected @endif>Oui</option>
-                                <option value="non"  @if(!$client->facture_payee)selected @endif>Non</option>
+                                <option value="oui" @if($client->facture_payee)selected @endif>Oui</option>
+                                <option value="non" @if(!$client->facture_payee)selected @endif>Non</option>
                             </select>
                         </div>
 

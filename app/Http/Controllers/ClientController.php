@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Models\Adresse;
 
 class ClientController extends Controller
 {
@@ -12,7 +13,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::with('adresse')->get();
         return view('clients.index', ['clients' => $clients]);
     }
 
@@ -33,46 +34,56 @@ class ClientController extends Controller
             'nom' => 'required|string|max:45',
             'prenom' => 'required|string|max:45',
             'email' => 'required|string|max:45',
-            'raison_sociale' => 'string|max:45',
+            'raison_sociale' => 'nullable|string|max:45',
             'telephone' => 'string|max:10',
-            'facture_envoyee' => 'boolean',
-            'facture_payee' => 'boolean'
+            'numero_et_rue' => 'required|string|max:255',
+            'code_postal' => 'required|string|max:5',
+            'ville' => 'required|string|max:45',
+            'facture_envoyee' => 'required',
+            'facture_payee' => 'required'
         ])) {
-            $nom = $request->input('nom');
-            $prenom = $request->input('prenom');
-            $email = $request->input('email');
-            $raison_sociale = $request->input('raison_sociale');
-            $telephone = $request->input('telephone');
-            $facture_envoyee = $request->input('facture_envoyee');
-            $facture_payee = $request->input('facture_payee');
+            // Rechercher une adresse existante
+            $adresse = Adresse::where('numero_et_rue', $request->input('numero_et_rue'))
+                ->where('code_postal', $request->input('code_postal'))
+                ->where('ville', $request->input('ville'))
+                ->first();
 
-            $client = new Client();
-            $client->nom = $nom;
-            $client->prenom = $prenom;
-            $client->email = $email;
-            $client->raison_sociale = $raison_sociale;
-            $client->telephone = $telephone;
-            $client->facture_envoye = $facture_envoyee;
-            $client->facture_payee = $facture_payee;
+            // Si l'adresse n'existe pas, créez-en une nouvelle
+            if (!$adresse) {
+                $adresse = new Adresse([
+                    'numero_et_rue' => $request->input('numero_et_rue'),
+                    'code_postal' => $request->input('code_postal'),
+                    'ville' => $request->input('ville')
+                ]);
+                $adresse->save();
+            }
 
+            $client = new Client([
+                'nom' => $request->input('nom'),
+                'prenom' => $request->input('prenom'),
+                'email' => $request->input('email'),
+                'raison_sociale' => $request->input('raison_sociale', null),
+                'telephone' => $request->input('telephone'),
+                'facture_envoyee' => $request->input('facture_envoyee') === 'oui',
+                'facture_payee' => $request->input('facture_payee') === 'oui',
+                'adresse_id' => $adresse->id
+            ]);
             $client->save();
 
-            return redirect()->route("client.show");
+            return redirect()->route("clients.show", $client->id);
         } else {
             return redirect()->back();
         }
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $client = Client::find($id);
-        return view('clients.show', [
-            'id_client' => $id,
-            'client' => $client
-        ]);
+        $client = Client::with('adresse')->findOrFail($id);
+        return view('clients.show', compact('client'));
     }
 
     /**
@@ -96,8 +107,11 @@ class ClientController extends Controller
             'nom' => 'required|string|max:45',
             'prenom' => 'required|string|max:45',
             'email' => 'required|string|max:45',
-            'raison_sociale' => 'string|max:45',
-            'telephone' => 'string|max:10',
+            'raison_sociale' => 'nullable|string|max:45',
+            'telephone' => 'required|string|max:10',
+            'numero_et_rue' => 'required|string|max:255',
+            'code_postal' => 'required|string|max:5',
+            'ville' => 'required|string|max:45',
             'facture_envoyee' => 'required',
             'facture_payee' => 'required'
         ])) {
@@ -106,11 +120,14 @@ class ClientController extends Controller
             $email = $request->input('email');
             $raison_sociale = $request->input('raison_sociale');
             $telephone = $request->input('telephone');
+            $numero_et_rue = $request->input('numero_et_rue');
+            $code_postal = $request->input('code_postal');
+            $ville = $request->input('ville');
             // Convertir les valeurs en booléens
             $facture_envoyee = $request->input('facture_envoyee') === 'oui';
             $facture_payee = $request->input('facture_payee') === 'oui';
 
-            $client = Client::find($id);
+            $client = Client::with('adresse')->find($id);
 
             $client->update([
                 'nom' => $nom,
@@ -122,59 +139,47 @@ class ClientController extends Controller
                 'facture_payee' => $facture_payee
             ]);
 
+            $adresseData = [
+                'numero_et_rue' => $numero_et_rue,
+                'code_postal' => $code_postal,
+                'ville' => $ville
+            ];
+
+            if ($client->adresse) {
+                // Vérifier si les détails de l'adresse ont changé
+                if (
+                    $client->adresse->numero_et_rue !== $numero_et_rue ||
+                    $client->adresse->code_postal !== $code_postal ||
+                    $client->adresse->ville !== $ville
+                ) {
+                    // Créer une nouvelle adresse si les détails ont changé
+                    $nouvelleAdresse = new Adresse($adresseData);
+                    $nouvelleAdresse->save();
+                    $client->adresse_id = $nouvelleAdresse->id;
+                    $client->save();
+                }
+            } else {
+                // Créer une nouvelle adresse si le client n'en a pas
+                $adresse = new Adresse($adresseData);
+                $adresse->save();
+                $client->adresse_id = $adresse->id;
+                $client->save();
+            }
+
             return redirect()->route("clients.show", $client->id);
         } else {
             return redirect()->back();
         }
     }
 
-    // public function update(Request $request, string $id)
-    // {
-    //     // Validation des données
-    //     $validatedData = $request->validate([
-    //         'nom' => 'required|string|max:45',
-    //         'prenom' => 'required|string|max:45',
-    //         'email' => 'required|string|max:45',
-    //         'raison_sociale' => 'string|max:45',
-    //         'telephone' => 'string|max:10',
-    //         // Ici, nous validons simplement la présence des champs sans spécifier leur type
-    //         'facture_envoyee' => 'required',
-    //         'facture_payee' => 'required'
-    //     ]);
-
-    //     // Convertir "oui"/"non" en valeurs booléennes
-    //     $facture_envoyee = $validatedData['facture_envoyee'] === 'oui';
-    //     $facture_payee = $validatedData['facture_payee'] === 'oui';
-
-    //     // Trouver le client par ID
-    //     $client = Client::find($id);
-    //     if (!$client) {
-    //         // Gérer le cas où le client n'est pas trouvé
-    //         return redirect()->back()->withErrors(['client_not_found' => 'Client introuvable.']);
-    //     }
-
-    //     // Mise à jour du client avec les données validées et les valeurs booléennes
-    //     $client->update([
-    //         'nom' => $validatedData['nom'],
-    //         'prenom' => $validatedData['prenom'],
-    //         'email' => $validatedData['email'],
-    //         'raison_sociale' => $validatedData['raison_sociale'],
-    //         'telephone' => $validatedData['telephone'],
-    //         'facture_envoyee' => $facture_envoyee,
-    //         'facture_payee' => $facture_payee
-    //     ]);
-
-    //     // Redirection vers la page du client
-    //     return redirect()->route("clients.show", $client->id);
-    // }
-
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $client = Client::find($id);
+        $client->delete();
+        return redirect()->route('clients.index');
     }
 
     /**

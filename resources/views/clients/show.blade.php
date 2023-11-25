@@ -13,6 +13,9 @@
                     <p class="mb-2"><span class="font-bold">Raison sociale :</span> {{$client->raison_sociale ?: 'Aucune'}}</p>
                     <p class="mb-2"><span class="font-bold">Email :</span> {{$client->email}}</p>
                     <p class="mb-2"><span class="font-bold">Téléphone :</span> {{$client->telephone}}</p>
+                    <p class="mb-2"><span class="font-bold">Numéro et rue : </span> {{$client->adresse->numero_et_rue}}</p>
+                    <p class="mb-2"><span class="font-bold">Code postal : </span> {{$client->adresse->code_postal}}</p>
+                    <p class="mb-2"><span class="font-bold">Ville : </span> {{$client->adresse->ville}}</p>
                     <p class="mb-2"><span class="font-bold">Facture envoyée :</span> {{$client->facture_envoyee ? 'Oui' : 'Non'}}</p>
                     <p class="mb-2"><span class="font-bold">Facture payée :</span> {{$client->facture_payee ? 'Oui' : 'Non'}}</p>
                 </div>

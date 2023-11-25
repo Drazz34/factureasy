@@ -9,8 +9,7 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="#" method="POST" class="flex flex-col space-y-4">
-                        @method('PUT')
+                    <form action="{{route('clients.store')}}" method="POST" class="flex flex-col space-y-4">
                         @csrf
                         <div>
                             <label for="nom" class="block text-sm font-medium text-gray-700">Nom* :</label>
@@ -33,8 +32,8 @@
                             <input type="tel" name="telephone" id="telephone" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div>
-                            <label for="adresse_num_rue" class="block text-sm font-medium text-gray-700">Numéro et rue* :</label>
-                            <input type="text" name="adresse_num_rue" id="adresse_num_rue" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <label for="numero_et_rue" class="block text-sm font-medium text-gray-700">Numéro et rue* :</label>
+                            <input type="text" name="numero_et_rue" id="numero_et_rue" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div>
                             <label for="code_postal" class="block text-sm font-medium text-gray-700">Code postal* :</label>
