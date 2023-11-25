@@ -9,7 +9,9 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="#" method="post" class="flex flex-col space-y-4">
+                    <form action="{{route('clients.update', $client->id)}}" method="POST" class="flex flex-col space-y-4">
+                        @method('PUT')
+                        @csrf
                         <div>
                             <label for="nom" class="block text-sm font-medium text-gray-700">Nom* :</label>
                             <input type="text" name="nom" id="nom" value="{{$client->nom}}" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
