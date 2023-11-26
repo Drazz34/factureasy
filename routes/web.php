@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FactureController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,5 +33,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/clients/search', [ClientController::class, 'search'])->name('clients.search');
 
 Route::resource('clients', ClientController::class);
+
+Route::resource('factures', FactureController::class);
 
 require __DIR__.'/auth.php';

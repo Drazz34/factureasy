@@ -1,3 +1,3 @@
-<a href="{{ route('clients.show', $client_id) }}" class="btn btn-gray">
+<a href="{{ route($route_name, $item_id) }}" class="btn btn-gray">
     Voir
 </a>

@@ -9,14 +9,16 @@ use Illuminate\View\Component;
 class ShowButton extends Component
 {
     
-    public $client_id;
+    public $route_name;
+    public $item_id;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($clientId)
+    public function __construct($routeName, $itemId)
     {
-        $this->client_id = $clientId;
+        $this->route_name = $routeName;
+        $this->item_id = $itemId;
     }
 
     /**

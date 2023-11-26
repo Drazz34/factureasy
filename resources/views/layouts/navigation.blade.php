@@ -22,6 +22,12 @@
                         Clients
                     </x-nav-link>
                 </div>
+                <!-- Factures -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('factures.index')" :active="request()->routeIs('factures.index')">
+                        Factures
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

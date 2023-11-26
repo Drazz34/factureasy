@@ -16,12 +16,21 @@
                     <p class="mb-2"><span class="font-bold">Numéro et rue : </span> {{$client->adresse->numero_et_rue}}</p>
                     <p class="mb-2"><span class="font-bold">Code postal : </span> {{$client->adresse->code_postal}}</p>
                     <p class="mb-2"><span class="font-bold">Ville : </span> {{$client->adresse->ville}}</p>
-                    <p class="mb-2"><span class="font-bold">Facture envoyée :</span> {{$client->facture_envoyee ? 'Oui' : 'Non'}}</p>
-                    <p class="mb-2"><span class="font-bold">Facture payée :</span> {{$client->facture_payee ? 'Oui' : 'Non'}}</p>
+                    @if($client->factures->isNotEmpty())
+                    @foreach ($client->factures as $facture)
+                    <div>
+                        <p class="mb-2"><span class="font-bold">Numéro de Facture :</span> {{ $facture->id }}</p>
+                        <p class="mb-2"><span class="font-bold">Facture envoyée :</span> {{ $facture->facture_envoyee ? 'Oui' : 'Non' }}</p>
+                        <p class="mb-2"><span class="font-bold">Facture payée :</span> {{ $facture->facture_payee ? 'Oui' : 'Non' }}</p>
+                    </div>
+                    @endforeach
+                    @else
+                    <p class="mb-2 font-bold">Aucune facture associée</p>
+                    @endif
                 </div>
                 <div class="px-6 py-4 flex flex-col md:flex-row justify-end space-y-3 md:space-y-0 md:space-x-3">
-                    <x-edit-button :client-id="$client->id" />
-                    <x-delete-button :client-id="$client->id" />
+                    <x-edit-button :route-name="'clients.edit'" :item-id="$client->id" />
+                    <x-delete-button :route-name="'clients.destroy'" :item-id="$client->id" />
                 </div>
             </div>
         </div>
