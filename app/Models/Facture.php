@@ -11,7 +11,7 @@ class Facture extends Model
 
     protected $table = "facture";
     protected $primaryKey = "id";
-    protected $fillable = array("montant","client_id");
+    protected $fillable = array("montant", "date_facture", "date_echeance", "total_ht", "total_ttc", "facture_envoyee", "facture_payee", "client_id");
     public $timestamps = false;
 
     /**
