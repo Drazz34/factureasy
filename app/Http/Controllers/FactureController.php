@@ -22,7 +22,8 @@ class FactureController extends Controller
      */
     public function create()
     {
-        return view('factures.create');
+        $clients = Client::all();
+        return view('factures.create', compact('clients'));
     }
 
     /**
@@ -30,7 +31,29 @@ class FactureController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->validate([
+            'date_facture' => 'required|date',
+            'date_echeance' => 'required|date',
+            'total_ht' => 'required|string',
+            'total_ttc' => 'required|string',
+            'facture_envoyee' => 'required',
+            'facture_payee' => 'required'
+        ])) {
+            $facture = new Facture([
+                'client_id' => $request->input('client_id'),
+                'date_facture' => $request->input('date_facture'),
+                'date_echeance' => $request->input('date_echeance'),
+                'total_ht' => $request->input('total_ht'),
+                'total_ttc' => $request->input('total_ttc'),
+                'facture_envoyee' => $request->input('facture_envoyee'),
+                'facture_payee' => $request->input('facture_payee')
+            ]);
+            $facture->save();
+
+            return redirect()->route('factures.show', $facture->id);
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -57,7 +80,38 @@ class FactureController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($request->validate([
+            'date_facture' => 'required|date',
+            'date_echeance' => 'required|date',
+            'total_ht' => 'required|string',
+            'total_ttc' => 'required|string',
+            'facture_envoyee' => 'required',
+            'facture_payee' => 'required'
+        ])) {
+            $client_id = $request->input('client_id');
+            $date_facture = $request->input('date_facture');
+            $date_echeance = $request->input('date_echeance');
+            $total_ht = $request->input('total_ht');
+            $total_ttc = $request->input('total_ttc');
+            // Convertir les valeurs en booléens
+            $facture_envoyee = $request->input('facture_envoyee') === '1';
+            $facture_payee = $request->input('facture_payee') === '1';
+
+            $facture = Facture::with('client')->find($id);
+
+            $facture->update([
+                'client_id' => $client_id,
+                'date_facture' => $date_facture,
+                'date_echeance' => $date_echeance,
+                'total_ht' => $total_ht,
+                'total_ttc' => $total_ttc,
+                'facture_envoyee' => $facture_envoyee,
+                'facture_payee' => $facture_payee
+            ]);
+            return redirect()->route('factures.show', $facture->id);
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -65,6 +119,8 @@ class FactureController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $facture = Facture::find($id);
+        $facture->delete();
+        return redirect()->route('factures.index');
     }
 }

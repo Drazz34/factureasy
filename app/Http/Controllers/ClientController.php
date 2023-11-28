@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Adresse;
+use App\Models\Facture;
 
 class ClientController extends Controller
 {
@@ -38,9 +39,7 @@ class ClientController extends Controller
             'telephone' => 'string|max:10',
             'numero_et_rue' => 'required|string|max:255',
             'code_postal' => 'required|string|max:5',
-            'ville' => 'required|string|max:45',
-            'facture_envoyee' => 'required',
-            'facture_payee' => 'required'
+            'ville' => 'required|string|max:45'
         ])) {
             // Rechercher une adresse existante
             $adresse = Adresse::where('numero_et_rue', $request->input('numero_et_rue'))
@@ -64,8 +63,6 @@ class ClientController extends Controller
                 'email' => $request->input('email'),
                 'raison_sociale' => $request->input('raison_sociale', null),
                 'telephone' => $request->input('telephone'),
-                'facture_envoyee' => $request->input('facture_envoyee') === 'oui',
-                'facture_payee' => $request->input('facture_payee') === 'oui',
                 'adresse_id' => $adresse->id
             ]);
             $client->save();
@@ -91,11 +88,8 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        $client = Client::find($id);
-        return view('clients.edit',  [
-            'id_client' => $id,
-            'client' => $client
-        ]);
+        $client = Client::findOrFail($id);
+        return view('clients.edit', compact('client'));
     }
 
     /**
@@ -111,9 +105,7 @@ class ClientController extends Controller
             'telephone' => 'required|string|max:10',
             'numero_et_rue' => 'required|string|max:255',
             'code_postal' => 'required|string|max:5',
-            'ville' => 'required|string|max:45',
-            'facture_envoyee' => 'required',
-            'facture_payee' => 'required'
+            'ville' => 'required|string|max:45'
         ])) {
             $nom = $request->input('nom');
             $prenom = $request->input('prenom');
@@ -123,9 +115,6 @@ class ClientController extends Controller
             $numero_et_rue = $request->input('numero_et_rue');
             $code_postal = $request->input('code_postal');
             $ville = $request->input('ville');
-            // Convertir les valeurs en booléens
-            $facture_envoyee = $request->input('facture_envoyee') === 'oui';
-            $facture_payee = $request->input('facture_payee') === 'oui';
 
             $client = Client::with('adresse')->find($id);
 
@@ -134,9 +123,7 @@ class ClientController extends Controller
                 'prenom' => $prenom,
                 'email' => $email,
                 'raison_sociale' => $raison_sociale,
-                'telephone' => $telephone,
-                'facture_envoyee' => $facture_envoyee,
-                'facture_payee' => $facture_payee
+                'telephone' => $telephone
             ]);
 
             $adresseData = [

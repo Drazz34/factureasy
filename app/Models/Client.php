@@ -11,7 +11,7 @@ class Client extends Model
 
     protected $table = "client";
     protected $primaryKey = "id";
-    protected $fillable = array("nom", "prenom", "email", "raison_sociale", "telephone", "facture_envoyee", "facture_payee", "adresse_id");
+    protected $fillable = array("nom", "prenom", "email", "raison_sociale", "telephone", "adresse_id");
     public $timestamps = false;
 
     /**
