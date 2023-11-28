@@ -11,7 +11,11 @@
                 <div class="p-6 text-gray-900">
                     <h2 class="font-bold text-lg mb-4">Facture de {{$facture->client->nom}} {{$facture->client->prenom}}</h2>
                     <p class="mb-2"><span class="font-bold">Date de facturation :</span> {{ \Carbon\Carbon::parse($facture->date_facture)->format('d/m/Y') }}</p>
+                    @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast())
+                    <p class="mb-2 text-red-600"><span class="font-bold">Date d'échéance :</span> {{ \Carbon\Carbon::parse($facture->date_echeance)->format('d/m/Y') }}</p>
+                    @else
                     <p class="mb-2"><span class="font-bold">Date d'échéance :</span> {{ \Carbon\Carbon::parse($facture->date_echeance)->format('d/m/Y') }}</p>
+                    @endif
                     <p class="mb-2"><span class="font-bold">Total HT :</span> {{$facture->total_ht}} €</p>
                     <p class="mb-2"><span class="font-bold">Total TTC :</span> {{$facture->total_ttc}} €</p>
                     <p class="mb-2"><span class="font-bold">Facture envoyée :</span> {{$facture->facture_envoyee ? 'Oui' : 'Non'}}</p>
