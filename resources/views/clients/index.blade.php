@@ -40,7 +40,7 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     {{$client->nom}} {{$client->prenom}}
                                     @foreach ($client->factures as $facture)
-                                    @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast())
+                                    @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast() && $facture->facture_payee == 0)
                                     <p class="mb-2 text-red-600 font-bold">facture en retard !</p>
                                     @endif
                                     @endforeach

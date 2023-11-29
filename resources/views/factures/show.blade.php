@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h2 class="font-bold text-lg mb-4">Facture de {{$facture->client->nom}} {{$facture->client->prenom}}</h2>
-                    @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast())
+                    @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast() && $facture->facture_payee == 0)
                     <p class="mb-2 text-red-600 font-bold">Attention : Cette facture est en retard !</p>
                     @endif
                     <p class="mb-2"><span class="font-bold">Date de facturation :</span> {{ \Carbon\Carbon::parse($facture->date_facture)->format('d/m/Y') }}</p>

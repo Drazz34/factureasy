@@ -20,7 +20,7 @@
                     @foreach ($client->factures as $facture)
                     <div>
                         <p class="mb-2"><span class="font-bold">Numéro de Facture :</span> {{ $facture->id }}</p>
-                        @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast())
+                        @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast() && $facture->facture_payee == 0)
                         <p class="mb-2 text-red-600 font-bold">Attention : Cette facture est en retard !</p>
                         @endif
                         <p class="mb-2"><span class="font-bold">Facture envoyée :</span> {{ $facture->facture_envoyee ? 'Oui' : 'Non' }}</p>
