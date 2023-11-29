@@ -12,7 +12,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 flex justify-center">
                     @if(count($clients) > 0)
@@ -39,6 +39,11 @@
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     {{$client->nom}} {{$client->prenom}}
+                                    @foreach ($client->factures as $facture)
+                                    @if (\Carbon\Carbon::parse($facture->date_echeance)->isPast())
+                                    <p class="mb-2 text-red-600 font-bold">facture en retard !</p>
+                                    @endif
+                                    @endforeach
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <x-show-button :route-name="'clients.show'" :item-id="$client->id" />

@@ -24,7 +24,8 @@
                         <p class="mb-2 text-red-600 font-bold">Attention : Cette facture est en retard !</p>
                         @endif
                         <p class="mb-2"><span class="font-bold">Facture envoyée :</span> {{ $facture->facture_envoyee ? 'Oui' : 'Non' }}</p>
-                        <p class="mb-2"><span class="font-bold">Facture payée :</span> {{ $facture->facture_payee ? 'Oui' : 'Non' }}</p>
+                        <p class="mb-4"><span class="font-bold">Facture payée :</span> {{ $facture->facture_payee ? 'Oui' : 'Non' }}</p>
+                        <a href="{{route('factures.show', $facture->id)}}" class="btn btn-show">Voir la facture</a>
                     </div>
                     @endforeach
                     @else
