@@ -14,14 +14,23 @@
                         <div>
                             <label for="nom" class="block text-sm font-medium text-gray-700">Nom* :</label>
                             <input type="text" name="nom" id="nom" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('nom')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div>
                             <label for="prenom" class="block text-sm font-medium text-gray-700">Prénom* :</label>
                             <input type="text" name="prenom" id="prenom" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('prenom')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Email* :</label>
                             <input type="email" name="email" id="email" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('email')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div>
                             <label for="raison_sociale" class="block text-sm font-medium text-gray-700">Raison sociale :</label>
@@ -30,18 +39,30 @@
                         <div>
                             <label for="telephone" class="block text-sm font-medium text-gray-700">Téléphone* :</label>
                             <input type="tel" name="telephone" id="telephone" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('telephone')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div>
                             <label for="numero_et_rue" class="block text-sm font-medium text-gray-700">Numéro et rue* :</label>
                             <input type="text" name="numero_et_rue" id="numero_et_rue" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('numero_et_rue')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div>
                             <label for="code_postal" class="block text-sm font-medium text-gray-700">Code postal* :</label>
                             <input type="text" name="code_postal" id="code_postal" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('code_postal')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div>
                             <label for="ville" class="block text-sm font-medium text-gray-700">Ville* :</label>
                             <input type="text" name="ville" id="ville" required class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            @error('ville')
+                            <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600">

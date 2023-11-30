@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdresseController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\ProfileController;
@@ -35,5 +36,7 @@ Route::get('/clients/search', [ClientController::class, 'search'])->name('client
 Route::resource('clients', ClientController::class);
 
 Route::resource('factures', FactureController::class);
+
+Route::resource('adresses', AdresseController::class);
 
 require __DIR__.'/auth.php';

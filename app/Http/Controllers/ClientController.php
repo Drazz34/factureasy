@@ -41,21 +41,12 @@ class ClientController extends Controller
             'code_postal' => 'required|string|max:5',
             'ville' => 'required|string|max:45'
         ])) {
-            // Rechercher une adresse existante
-            $adresse = Adresse::where('numero_et_rue', $request->input('numero_et_rue'))
-                ->where('code_postal', $request->input('code_postal'))
-                ->where('ville', $request->input('ville'))
-                ->first();
-
-            // Si l'adresse n'existe pas, créez-en une nouvelle
-            if (!$adresse) {
-                $adresse = new Adresse([
-                    'numero_et_rue' => $request->input('numero_et_rue'),
-                    'code_postal' => $request->input('code_postal'),
-                    'ville' => $request->input('ville')
-                ]);
-                $adresse->save();
-            }
+            
+            $adresse = Adresse::firstOrCreate([
+                'numero_et_rue' => $request->input('numero_et_rue'),
+                'code_postal' => $request->input('code_postal'),
+                'ville' => $request->input('ville')
+            ]);
 
             $client = new Client([
                 'nom' => $request->input('nom'),

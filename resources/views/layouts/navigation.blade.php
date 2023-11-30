@@ -28,6 +28,12 @@
                         Factures
                     </x-nav-link>
                 </div>
+                <!-- Adresses -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('adresses.index')" :active="request()->routeIs('adresses.index')">
+                        Adresses
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
