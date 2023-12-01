@@ -14,7 +14,9 @@ class DashboardController extends Controller
         $nombreDeClients = Client::count();
         $nombreDeFactures = Facture::count();
         $nombreDeFacturesEnvoyees = Facture::where('facture_envoyee', 1)->count();
+        $nombreDeFacturesNonEnvoyees = Facture::where('facture_envoyee', 0)->count();
         $nombreDeFacturesPayees = Facture::where('facture_payee', 1)->count();
+        $nombreDeFacturesNonPayees = Facture::where('facture_payee', 0)->count();
         $nombreDeFacturesEnRetard = Facture::where('date_echeance', '<', Carbon::now())
                                            ->where('facture_payee', 0)
                                            ->count();
@@ -23,7 +25,7 @@ class DashboardController extends Controller
         $chiffreDAffaireEnRetard = Facture::where('date_echeance', '<', Carbon::now())->where('facture_payee', 0)->sum('total_ttc');
         $chiffreDAffaireAVenir = Facture::whereNot('date_echeance', '<', Carbon::now())->where('facture_payee', 0)->sum('total_ttc');
         $chiffreDAffairePotentiel = Facture::sum('total_ttc');
-        return view('dashboard', compact('nombreDeClients', 'nombreDeFactures', 'nombreDeFacturesEnvoyees', 'nombreDeFacturesPayees', 'nombreDeFacturesEnRetard', 'nombreDAdresses', 'chiffreDAffaire', 'chiffreDAffaireEnRetard', 'chiffreDAffaireAVenir', 'chiffreDAffairePotentiel'));
+        return view('dashboard', compact('nombreDeClients', 'nombreDeFactures', 'nombreDeFacturesEnvoyees', 'nombreDeFacturesNonEnvoyees', 'nombreDeFacturesPayees', 'nombreDeFacturesNonPayees', 'nombreDeFacturesEnRetard', 'nombreDAdresses', 'chiffreDAffaire', 'chiffreDAffaireEnRetard', 'chiffreDAffaireAVenir', 'chiffreDAffairePotentiel'));
     }
 }
 

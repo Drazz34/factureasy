@@ -12,7 +12,9 @@
                     <p class="mb-2"><span class="font-bold">Nombre de clients :</span> {{$nombreDeClients}}</p>
                     <p class="mb-2"><span class="font-bold">Nombre total de factures :</span> {{$nombreDeFactures}}</p>
                     <p class="mb-2 pl-4"><span class="font-bold">Nombre de factures envoyées :</span> {{$nombreDeFacturesEnvoyees}}</p>
+                    <p class="mb-2 pl-4"><span class="font-bold">Nombre de factures non envoyées :</span> {{$nombreDeFacturesNonEnvoyees}}</p>
                     <p class="mb-2 pl-4"><span class="font-bold">Nombre de factures payées :</span> {{$nombreDeFacturesPayees}}</p>
+                    <p class="mb-2 pl-4"><span class="font-bold">Nombre de factures non payées :</span> {{$nombreDeFacturesNonPayees}}</p>
                     <p class="mb-2 pl-4"><span class="font-bold">Nombre de factures en retard :</span> {{$nombreDeFacturesEnRetard}}</p>
                     <p class="mb-2"><span class="font-bold">Nombre d'adresses :</span> {{$nombreDAdresses}}</p>
                     <p class="mb-2"><span class="font-bold">Chiffre d'affaire réalisé :</span> {{$chiffreDAffaire}} €</p>
