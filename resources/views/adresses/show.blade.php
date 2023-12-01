@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     @if($adresse->clients->isNotEmpty())
                     @foreach($adresse->clients as $client)
-                    <h2 class="font-bold text-lg mb-4">Adresse de : {{$client->nom}} {{$client->prenom}}</h2>
+                    <h2 class="font-bold text-lg mb-4">Adresse de : <a href="{{route('clients.show', $client->id)}}">{{$client->nom}} {{$client->prenom}}</a></h2>
                     @endforeach
                     @else
                     <p class="mb-2 font-bold">Aucun client référencé à cette adresse</p>
