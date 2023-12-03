@@ -14,7 +14,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::with(['adresse', 'factures'])->get();
+        // $clients = Client::with(['adresse', 'factures'])->get();
+        $clients = Client::with(['adresse', 'factures'])->paginate(10);
         return view('clients.index', compact('clients'));
     }
 
@@ -165,8 +166,8 @@ class ClientController extends Controller
      */
     public function search(Request $request)
     {
-        $nom = $request->input('recherche_nom');
-        $clients = Client::where('nom', 'like', "%$nom%")->get();
+        $recherche = $request->input('recherche');
+        $clients = Client::where('nom', 'like', "%$recherche%")->orWhere('email', 'like', "%$recherche%")->paginate(10);
 
         return view('clients.index', compact('clients'));
     }
